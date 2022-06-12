@@ -3,6 +3,7 @@
 #import numpy as np
 from tkinter import *
 
+#Clase para importar audios
 class ventanaImportar:
     def __init__(self):
         #Creacion de nueva ventana para importar audios
@@ -18,6 +19,27 @@ class ventanaImportar:
 
     def importar(self):
             print('importar')
+
+#Clase para mostrar los creditos
+class ventanaCreditos:
+    def __init__(self):
+        #Creacion de nueva ventana para creditos
+        ventanaCreditos = Toplevel()
+        ventanaCreditos.geometry("500x250")
+        ventanaCreditos.title("Integrantes")
+
+        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Grupo #1", font=('Arial', 16))
+        ventanaCreditos.etiqueta.pack(pady=20)
+
+        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Javier Castañeda - 1290520", font=('Arial', 12))
+        ventanaCreditos.etiqueta.pack(pady=5)
+        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Leonardo Castillo - ", font=('Arial', 12))
+        ventanaCreditos.etiqueta.pack(pady=5)
+        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Andres Coronado - ", font=('Arial', 12))
+        ventanaCreditos.etiqueta.pack(pady=5)
+        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Pablo Flores - ", font=('Arial', 12))
+        ventanaCreditos.etiqueta.pack(pady=5)
+
 
 #clase de ventana principal
 class VentanaInicio:
@@ -37,23 +59,20 @@ class VentanaInicio:
 
         self.botonSalir = Button(master, text="Salir", command=master.quit, width=20)
         self.botonSalir.pack(pady=10)
+
     #Metodo para el boton de inicio
     def iniciar(self):
         print('Importar audios')
+        #Llamado a la clase para la ventana de importar audios
+        ventanaImportar()
         #este comando cierra VentanaInicio
-        importarAudio = ventanaImportar()
         root.withdraw()
-
 
     #Metodo para el boton de creditos
     def creditos(self):
         print('Grupo 1')
         #Creacion de nueva ventana para los creditos
-        ventanaCreditos = Toplevel()
-        ventanaCreditos.geometry("500x250")
-        ventanaCreditos.title("Integrantes")
-        #este comando cierra VentanaInicio
-        root.withdraw()
+        ventanaCreditos()
 
 root = Tk()
 miVentana = VentanaInicio(root)
