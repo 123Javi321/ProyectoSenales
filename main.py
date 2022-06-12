@@ -1,6 +1,8 @@
 #Grupo 1
 #Librerias a utilizar
 #import numpy as np
+#Libreria para analizar señales
+import thinkdsp
 from tkinter import *
 
 #Clase para importar audios
@@ -39,7 +41,6 @@ class ventanaCreditos:
         ventanaCreditos.etiqueta.pack(pady=5)
         ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Pablo Flores - ", font=('Arial', 12))
         ventanaCreditos.etiqueta.pack(pady=5)
-
 
 #clase de ventana principal
 class VentanaInicio:
