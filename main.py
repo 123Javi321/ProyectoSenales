@@ -159,4 +159,5 @@ root = Tk()
 miVentana = VentanaInicio(root)
 root.mainloop()
 
+print('xd')
 
