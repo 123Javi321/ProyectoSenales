@@ -117,7 +117,7 @@ class ventanaCreditos:
         ventanaCreditos.etiqueta.pack(pady=5)
         ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Angel Castillo - 1172920 ", font=('Arial', 12))
         ventanaCreditos.etiqueta.pack(pady=5)
-        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Andres Coronado - ", font=('Arial', 12))
+        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Andres Coronado - 1168420 ", font=('Arial', 12))
         ventanaCreditos.etiqueta.pack(pady=5)
         ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Pablo Flores - ", font=('Arial', 12))
         ventanaCreditos.etiqueta.pack(pady=5)
