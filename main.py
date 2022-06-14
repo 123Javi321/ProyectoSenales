@@ -8,7 +8,7 @@ from tkinter import *
 class ventanaFiltros:
     def __init__(self):
         ventanaFiltros = Toplevel()
-        ventanaFiltros.geometry("500x250")
+        ventanaFiltros.geometry("500x400")
         ventanaFiltros.title("Seleccionar filtro")
 
         ventanaFiltros.etiqueta = Label(ventanaFiltros, text="Seleccione el filtro para aplicar: ", font=('Arial', 16))
@@ -44,9 +44,9 @@ class ventanaFiltros:
 
 #Clase para elegir los audios
 class ventanaAudios:
-    def __initi__(self):
+    def __init__(self):
         ventanaAudios = Toplevel()
-        ventanaAudios.geometry("500x250")
+        ventanaAudios.geometry("500x300")
         ventanaAudios.title("Seleccionar audio")
 
         ventanaAudios.etiqueta = Label(ventanaAudios, text="Seleccione el audio para filtrar: ", font=('Arial', 16))
@@ -95,12 +95,12 @@ class ventanaImportar:
 
     #Metodo para el boton de importar audios
     def importar(self):
-            print('importar')
+        print('importar')
 
     #Metodo para el boton de continuar
     def continuar(self):
-            ventanaAudios()
-            print('continuar')
+        ventanaAudios()
+        print('continuar')
 
 #Clase para mostrar los creditos
 class ventanaCreditos:
@@ -158,6 +158,4 @@ class VentanaInicio:
 root = Tk()
 miVentana = VentanaInicio(root)
 root.mainloop()
-
-print('xd')
 
