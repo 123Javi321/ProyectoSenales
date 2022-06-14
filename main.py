@@ -115,7 +115,7 @@ class ventanaCreditos:
 
         ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Javier Castañeda - 1290520", font=('Arial', 12))
         ventanaCreditos.etiqueta.pack(pady=5)
-        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Leonardo Castillo - ", font=('Arial', 12))
+        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Angel Castillo - 1172920 ", font=('Arial', 12))
         ventanaCreditos.etiqueta.pack(pady=5)
         ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Andres Coronado - ", font=('Arial', 12))
         ventanaCreditos.etiqueta.pack(pady=5)
@@ -159,5 +159,5 @@ root = Tk()
 miVentana = VentanaInicio(root)
 root.mainloop()
 
-print('xd')
+
 
