@@ -121,7 +121,7 @@ class ventanaCreditos:
         ventanaCreditos.etiqueta.pack(pady=5)
         ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Andres Coronado - 1168420 ", font=('Arial', 12))
         ventanaCreditos.etiqueta.pack(pady=5)
-        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Pablo Flores - ", font=('Arial', 12))
+        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Pablo Flores - 1164720", font=('Arial', 12))
         ventanaCreditos.etiqueta.pack(pady=5)
 
 #clase de ventana principal
@@ -160,5 +160,3 @@ class VentanaInicio:
 root = Tk()
 miVentana = VentanaInicio(root)
 root.mainloop()
-
-#prueba de merge
