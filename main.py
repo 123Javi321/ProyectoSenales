@@ -161,6 +161,4 @@ root = Tk()
 miVentana = VentanaInicio(root)
 root.mainloop()
 
-
-
-#Mensaje de prueba
+#prueba de merge
