@@ -2,6 +2,7 @@
 #Librerias a utilizar
 #import numpy as np
 #Libreria para analizar señales
+#prueba1
 from tkinter import *
 
 #Clase para los filtros
