@@ -3,7 +3,9 @@
 #import numpy as np
 #Libreria para analizar señales
 #prueba1
+import os
 from tkinter import *
+from thinkdsp import read_wave
 
 #Clase para los filtros
 class ventanaFiltros:
@@ -65,17 +67,20 @@ class ventanaAudios:
     #Metodo para el primer audio
     def A1(self):
             print('Primer audio')
-            ventanaFiltros()
+            a1 = read_wave('Audio1.wav')
+            a1.make_audio()
+            a1.plot()
+            #ventanaFiltros()
 
     #Metodo para el segundo audio
     def A2(self):
             print('Segundo audio')
-            ventanaFiltros()
+            #ventanaFiltros()
 
     #Metodo para el tercer audio
     def A3(self):
             print('Tercer audio')
-            ventanaFiltros()
+            #ventanaFiltros()
 
 #Clase para importar audios
 class ventanaImportar:
@@ -96,13 +101,13 @@ class ventanaImportar:
 
     #Metodo para el boton de importar audios
     def importar(self):
-            print('importar')
+        print('importar')
 
     #Metodo para el boton de continuar
     def continuar(self):
         ventanaAudios()
         print('continuar')
-        root.withdraw()
+        #root.withdraw()
 
 
 #Clase para mostrar los creditos
