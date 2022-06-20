@@ -6,16 +6,25 @@
 import os
 from tkinter import *
 from thinkdsp import read_wave
+from tkinter import filedialog
+import pygame
+import wget
+
+optAudio = 0
+pygame.mixer.init()
 
 #Clase para los filtros
 class ventanaFiltros:
     def __init__(self):
         ventanaFiltros = Toplevel()
-        ventanaFiltros.geometry("500x400")
+        ventanaFiltros.geometry("500x450")
         ventanaFiltros.title("Seleccionar filtro")
 
         ventanaFiltros.etiqueta = Label(ventanaFiltros, text="Seleccione el filtro para aplicar: ", font=('Arial', 16))
         ventanaFiltros.etiqueta.pack(pady=20)
+
+        ventanaFiltros.botonPlay = Button(ventanaFiltros, text="Reproducir audio original", command=self.P, width=20)
+        ventanaFiltros.botonPlay.pack(pady=20)
 
         ventanaFiltros.botonLP = Button(ventanaFiltros, text="Pasa bajos", command=self.LP, width=20)
         ventanaFiltros.botonLP.pack(pady=20)
@@ -45,42 +54,75 @@ class ventanaFiltros:
     def E(self):
         print('Eliminacion')
 
+    #Metodo para reproducir el audio original
+    def P(self):
+        print('Reproducir audio original')
+
 #Clase para elegir los audios
 class ventanaAudios:
     def __init__(self):
         ventanaAudios = Toplevel()
-        ventanaAudios.geometry("500x300")
+        ventanaAudios.geometry("610x200")
         ventanaAudios.title("Seleccionar audio")
 
         ventanaAudios.etiqueta = Label(ventanaAudios, text="Seleccione el audio para filtrar: ", font=('Arial', 16))
-        ventanaAudios.etiqueta.pack(pady=20)
+        ventanaAudios.etiqueta.pack()
 
         ventanaAudios.botonA1 = Button(ventanaAudios, text="Primer audio", command=self.A1, width=20)
-        ventanaAudios.botonA1.pack(pady=20)
+        ventanaAudios.botonA1.place(x=30, y=60)
 
         ventanaAudios.botonA2 = Button(ventanaAudios, text="Segundo audio", command=self.A2, width=20)
-        ventanaAudios.botonA2.pack(pady=20)
+        ventanaAudios.botonA2.place(x=230, y=60)
 
         ventanaAudios.botonA3 = Button(ventanaAudios, text="Tercer audio", command=self.A3, width=20)
-        ventanaAudios.botonA3.pack(pady=20)
+        ventanaAudios.botonA3.place(x=430, y=60)
+
+        ventanaAudios.botonSel = Button(ventanaAudios, text="Seleccionar", command=self.Sel, width=20)
+        ventanaAudios.botonSel.place(x=230, y=160)
+
+        ventanaAudios.botonStop = Button(ventanaAudios, text="Pausa", command=self.St, width=20)
+        ventanaAudios.botonStop.place(x=230, y=120)
 
     #Metodo para el primer audio
     def A1(self):
             print('Primer audio')
-            a1 = read_wave('Audio1.wav')
-            a1.make_audio()
-            a1.plot()
-            #ventanaFiltros()
+            #Linea para importar audio
+            m1 = filedialog.askopenfilename(title="Selecciona el audio", filetypes=(("Archivos wav", "*.wav"), ))
+            #Lineas para reproducir el audio
+            pygame.mixer.music.load(m1)
+            pygame.mixer.music.play(loops=0)
+            optAudio = 1
 
     #Metodo para el segundo audio
     def A2(self):
             print('Segundo audio')
-            #ventanaFiltros()
+            #Linea para importar audio
+            m2 = filedialog.askopenfilename(title="Selecciona el audio", filetypes=(("Archivos wav", "*.wav"), ))
+            #Lineas para reproducir el audio
+            pygame.mixer.music.load(m2)
+            pygame.mixer.music.play(loops=0)
+            optAudio = 2
 
     #Metodo para el tercer audio
     def A3(self):
             print('Tercer audio')
-            #ventanaFiltros()
+            #Linea para importar audio
+            m3 = filedialog.askopenfilename(title="Selecciona el audio", filetypes=(("Archivos wav", "*.wav"), ))
+            #Lineas para reproducir el audio
+            pygame.mixer.music.load(m3)
+            pygame.mixer.music.play(loops=0)
+            optAudio = 3
+
+    #Metodo para seleccionar audio        
+    def Sel(self):
+            print('Seleccionar')
+            print(optAudio)
+            ventanaFiltros()
+
+    #Metodo para pausar la musica
+    def St(self):
+            print('Pausa')
+            pygame.mixer.music.stop()
 
 #Clase para importar audios
 class ventanaImportar:
