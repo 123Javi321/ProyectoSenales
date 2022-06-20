@@ -93,7 +93,7 @@ class ventanaImportar:
         ventanaImportar.etiqueta = Label(ventanaImportar, text="Importación de audios", font=('Arial', 16))
         ventanaImportar.etiqueta.pack(pady=20)
 
-        ventanaImportar.botonImportar = Button(ventanaImportar, text="Importar", command=self.importar, width=20)
+        ventanaImportar.botonImportar = Button(ventanaImportar, text="Importar", command=lambda:[self.importar(), ventanaImportar.destroy()], width=20)
         ventanaImportar.botonImportar.pack(pady=30)
 
         ventanaImportar.botonContinuar = Button(ventanaImportar, text="Continuar", command=self.continuar, width=20)
@@ -166,3 +166,5 @@ class VentanaInicio:
 root = Tk()
 miVentana = VentanaInicio(root)
 root.mainloop()
+
+
