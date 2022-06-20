@@ -5,10 +5,10 @@
 #prueba1
 import os
 from tkinter import *
+from tkinter import messagebox
 from thinkdsp import read_wave
 from tkinter import filedialog
 import pygame
-import wget
 
 optAudio = 0
 pygame.mixer.init()
@@ -143,6 +143,8 @@ class ventanaImportar:
 
     #Metodo para el boton de importar audios
     def importar(self):
+        #Mensaje de caja al importar
+        messagebox.showinfo(title='Importar Audios', message='Has importado el audio correctamente')
         print('importar')
 
     #Metodo para el boton de continuar
@@ -178,6 +180,7 @@ class VentanaInicio:
         self.master = master
         master.title("Inicio - Proyecto ASS - G1")
         master.geometry("500x250")
+        
 
         self.etiqueta = Label(master, text="Proyecto Analisis de Senales y Sistemas", font=('Arial', 16))
         self.etiqueta.pack(pady=20)
