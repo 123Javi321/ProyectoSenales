@@ -96,7 +96,7 @@ class ventanaImportar:
         ventanaImportar.botonImportar = Button(ventanaImportar, text="Importar", command=lambda:[self.importar(), ventanaImportar.destroy()], width=20)
         ventanaImportar.botonImportar.pack(pady=30)
 
-        ventanaImportar.botonContinuar = Button(ventanaImportar, text="Continuar", command=self.continuar, width=20)
+        ventanaImportar.botonContinuar = Button(ventanaImportar, text="Continuar", command=lambda:[self.continuar(), ventanaImportar.destroy()], width=20)
         ventanaImportar.botonContinuar.pack(pady=20)
 
     #Metodo para el boton de importar audios
