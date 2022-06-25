@@ -10,8 +10,43 @@ from thinkdsp import read_wave
 from tkinter import filedialog
 import pygame
 
-optAudio = 0
+optAudio =0
+
 pygame.mixer.init()
+
+#Clase para los graficos
+class ventanaGraficos:
+    def __init__(self):
+        ventanaFiltros = Toplevel()
+        ventanaFiltros.geometry("700x250")
+        ventanaFiltros.title("Graficas")
+
+        ventanaFiltros.etiqueta = Label(ventanaFiltros, text="Seleccione la grafica que desea ver: ", font=('Arial', 16))
+        ventanaFiltros.etiqueta.pack(pady=20)
+
+        ventanaFiltros.botonG1 = Button(ventanaFiltros, text="Gráfico en dominio del tiempo sin filtrar", command=self.G1, width=40)
+        ventanaFiltros.botonG1.place(x=60, y=60)
+
+        ventanaFiltros.botonG2 = Button(ventanaFiltros, text="Gráfico en dominio de la frecuencia sin filtrar", command=self.G2, width=40)
+        ventanaFiltros.botonG2.place(x=60, y=160)
+
+        ventanaFiltros.botonG3 = Button(ventanaFiltros, text="Gráfico en dominio del tiempo filtrado", command=self.G3, width=40)
+        ventanaFiltros.botonG3.place(x=360, y=60)
+
+        ventanaFiltros.botonG4 = Button(ventanaFiltros, text="Gráfico en dominio de la frecuencia filtrado", command=self.G4, width=40)
+        ventanaFiltros.botonG4.place(x=360, y=160)
+
+    def G1(self):
+        print("Grafico 1")
+
+    def G2(self):
+        print("Grafico 2")
+
+    def G3(self):
+        print("Grafico 3")
+    
+    def G4(self):
+        print("Grafico 4")
 
 #Clase para los filtros
 class ventanaFiltros:
@@ -22,9 +57,6 @@ class ventanaFiltros:
 
         ventanaFiltros.etiqueta = Label(ventanaFiltros, text="Seleccione el filtro para aplicar: ", font=('Arial', 16))
         ventanaFiltros.etiqueta.pack(pady=20)
-
-        ventanaFiltros.botonPlay = Button(ventanaFiltros, text="Reproducir audio original", command=self.P, width=20)
-        ventanaFiltros.botonPlay.pack(pady=20)
 
         ventanaFiltros.botonLP = Button(ventanaFiltros, text="Pasa bajos", command=self.LP, width=20)
         ventanaFiltros.botonLP.pack(pady=20)
@@ -41,22 +73,22 @@ class ventanaFiltros:
     #Metodo para el filtro pasa bajos
     def LP(self):
         print('Pasa bajos')
+        ventanaGraficos()
 
     #Metodo para el filtro pasa altos
     def HP(self):
         print('Pasa altos')
+        ventanaGraficos()
 
     #Metodo para el filtro pasa banda
     def BP(self):
         print('Pasa banda')
+        ventanaGraficos()
 
     #Metodo para el filtro eliminación
     def E(self):
         print('Eliminacion')
-
-    #Metodo para reproducir el audio original
-    def P(self):
-        print('Reproducir audio original')
+        ventanaGraficos()
 
 #Clase para elegir los audios
 class ventanaAudios:
@@ -105,29 +137,32 @@ class ventanaAudios:
         ventanaAudios.botonStop.place(x=230, y=120)
 
     #Metodo para el primer audio
-    def A1(self,m1):
+    def A1(self):
             #Lineas para reproducir el audio
-            pygame.mixer.music.load(m1)
-            pygame.mixer.music.play(loops=0)
+            #pygame.mixer.music.load(m1)
+            #pygame.mixer.music.play(loops=0)
+            optAudio =1
 
     #Metodo para el segundo audio
-    def A2(self,audio2):
+    def A2(self):
             #Lineas para reproducir el audio
-            pygame.mixer.music.load(audio2)
-            pygame.mixer.music.play(loops=0)
+            #pygame.mixer.music.load(m2)
+            #pygame.mixer.music.play(loops=0)
+            optAudio=2
 
     #Metodo para el tercer audio
-    def A3(self,audio3):
+    def A3(self):
             #Lineas para reproducir el audio
-            pygame.mixer.music.load(audio3)
-            pygame.mixer.music.play(loops=0)
+            #pygame.mixer.music.load(m3)
+            #pygame.mixer.music.play(loops=0)
+            optAudio=3
 
     #Metodo para seleccionar audio        
     def Sel(self):
             print('Seleccionar')
             pygame.mixer.music.unpause()
-            #ventanaFiltros()
-
+            ventanaFiltros()
+            
     #Metodo para pausar la musica
     def St(self):
             print('Pausa')
