@@ -61,63 +61,72 @@ class ventanaFiltros:
 #Clase para elegir los audios
 class ventanaAudios:
     def __init__(self):
+        m1=None
+        m2=None
+        m3=None
+        #Pide al usuario ingresar los audios
+        for i in range(3):
+            if(i==0):
+                print('Primer audio')
+                #Linea para importar audio
+                m1 = filedialog.askopenfilename(title="Selecciona el audio", filetypes=(("Archivos wav", "*.wav"), ))
+                messagebox.showinfo(title='Importar Audios', message='Has importado el audio 1 correctamente')
+            elif(i==1):
+                print('Segundo audio')
+                #Linea para importar audio
+                m2 = filedialog.askopenfilename(title="Selecciona el audio", filetypes=(("Archivos wav", "*.wav"), ))
+                messagebox.showinfo(title='Importar Audios', message='Has importado el audio 2 correctamente')
+            elif(i==2):    
+                print('Tercer audio')
+                #Linea para importar audio
+                m3 = filedialog.askopenfilename(title="Selecciona el audio", filetypes=(("Archivos wav", "*.wav"), ))
+                messagebox.showinfo(title='Importar Audios', message='Has importado el audio 3 correctamente')
+
         ventanaAudios = Toplevel()
         ventanaAudios.geometry("610x200")
         ventanaAudios.title("Seleccionar audio")
 
         ventanaAudios.etiqueta = Label(ventanaAudios, text="Seleccione el audio para filtrar: ", font=('Arial', 16))
         ventanaAudios.etiqueta.pack()
-
-        ventanaAudios.botonA1 = Button(ventanaAudios, text="Primer audio", command=self.A1, width=20)
+        #Load y play del primer audio
+        ventanaAudios.botonA1 = Button(ventanaAudios, text="Primer audio", command=lambda:[pygame.mixer.music.load(m1),pygame.mixer.music.play(loops=0)], width=20)
         ventanaAudios.botonA1.place(x=30, y=60)
-
-        ventanaAudios.botonA2 = Button(ventanaAudios, text="Segundo audio", command=self.A2, width=20)
+        #Load y play del segundo audio
+        ventanaAudios.botonA2 = Button(ventanaAudios, text="Segundo audio", command=lambda:[pygame.mixer.music.load(m2),pygame.mixer.music.play(loops=0)], width=20)
         ventanaAudios.botonA2.place(x=230, y=60)
-
-        ventanaAudios.botonA3 = Button(ventanaAudios, text="Tercer audio", command=self.A3, width=20)
+        #Load y play del tercer audio
+        ventanaAudios.botonA3 = Button(ventanaAudios, text="Tercer audio", command=lambda:[pygame.mixer.music.load(m3),pygame.mixer.music.play(loops=0)], width=20)
         ventanaAudios.botonA3.place(x=430, y=60)
-
+        #Ventana para aplicar filtros
         ventanaAudios.botonSel = Button(ventanaAudios, text="Seleccionar", command=self.Sel, width=20)
         ventanaAudios.botonSel.place(x=230, y=160)
-
+        #Pausar el audio que está cargado
         ventanaAudios.botonStop = Button(ventanaAudios, text="Pausa", command=self.St, width=20)
         ventanaAudios.botonStop.place(x=230, y=120)
 
     #Metodo para el primer audio
-    def A1(self):
-            print('Primer audio')
-            #Linea para importar audio
-            m1 = filedialog.askopenfilename(title="Selecciona el audio", filetypes=(("Archivos wav", "*.wav"), ))
+    def A1(self,m1):
             #Lineas para reproducir el audio
             pygame.mixer.music.load(m1)
             pygame.mixer.music.play(loops=0)
-            optAudio = 1
 
     #Metodo para el segundo audio
-    def A2(self):
-            print('Segundo audio')
-            #Linea para importar audio
-            m2 = filedialog.askopenfilename(title="Selecciona el audio", filetypes=(("Archivos wav", "*.wav"), ))
+    def A2(self,audio2):
             #Lineas para reproducir el audio
-            pygame.mixer.music.load(m2)
+            pygame.mixer.music.load(audio2)
             pygame.mixer.music.play(loops=0)
-            optAudio = 2
 
     #Metodo para el tercer audio
-    def A3(self):
-            print('Tercer audio')
-            #Linea para importar audio
-            m3 = filedialog.askopenfilename(title="Selecciona el audio", filetypes=(("Archivos wav", "*.wav"), ))
+    def A3(self,audio3):
             #Lineas para reproducir el audio
-            pygame.mixer.music.load(m3)
+            pygame.mixer.music.load(audio3)
             pygame.mixer.music.play(loops=0)
-            optAudio = 3
 
     #Metodo para seleccionar audio        
     def Sel(self):
             print('Seleccionar')
-            print(optAudio)
-            ventanaFiltros()
+            pygame.mixer.music.unpause()
+            #ventanaFiltros()
 
     #Metodo para pausar la musica
     def St(self):
@@ -134,24 +143,13 @@ class ventanaImportar:
 
         ventanaImportar.etiqueta = Label(ventanaImportar, text="Importación de audios", font=('Arial', 16))
         ventanaImportar.etiqueta.pack(pady=20)
-
-        ventanaImportar.botonImportar = Button(ventanaImportar, text="Importar", command=lambda:[self.importar(), ventanaImportar.destroy()], width=20)
+        ventanaImportar.botonImportar = Button(ventanaImportar, text="Importar", command=lambda:[self.importar(),ventanaImportar.destroy()], width=20)
         ventanaImportar.botonImportar.pack(pady=30)
-
-        ventanaImportar.botonContinuar = Button(ventanaImportar, text="Continuar", command=lambda:[self.continuar(), ventanaImportar.destroy()], width=20)
-        ventanaImportar.botonContinuar.pack(pady=20)
-
+        
     #Metodo para el boton de importar audios
     def importar(self):
-        #Mensaje de caja al importar
-        messagebox.showinfo(title='Importar Audios', message='Has importado el audio correctamente')
-        print('importar')
-
-    #Metodo para el boton de continuar
-    def continuar(self):
         ventanaAudios()
-        print('continuar')
-        #root.withdraw()
+
 
 
 #Clase para mostrar los creditos
