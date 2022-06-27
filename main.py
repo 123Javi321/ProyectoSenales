@@ -162,7 +162,7 @@ class ventanaAudios:
     def __init__(self):
         ventanaAudios = Toplevel()
         ancho_ventana = 610
-        alto_ventana = 200
+        alto_ventana = 340
 
         x_ventana = root.winfo_screenwidth() // 2 - ancho_ventana // 2
         y_ventana = root.winfo_screenheight() // 2 - alto_ventana // 2
@@ -170,10 +170,11 @@ class ventanaAudios:
         posicion = str(ancho_ventana) + "x" + str(alto_ventana) + "+" + str(x_ventana) + "+" + str(y_ventana)
         ventanaAudios.geometry(posicion)
 
-        ventanaAudios.title("Seleccionar audio")
-
-        bgreproductor = PhotoImage(file="Fondo.png")
+        bgreproductor = PhotoImage(file="Fondo2.gif")
         lblreproductor = Label(ventanaAudios, image=bgreproductor).place(x=0, y=0)
+        imgSalir = PhotoImage(file="Salir.png")
+
+        ventanaAudios.title("Seleccionar audio")
 
         ventanaAudios.etiqueta = Label(ventanaAudios, text="Seleccione el audio para filtrar: ", font=('Arial', 16))
         ventanaAudios.etiqueta.pack()
@@ -189,11 +190,12 @@ class ventanaAudios:
         # Ventana para aplicar filtros
         ventanaAudios.botonSel = Button(ventanaAudios, text="Seleccionar",
                                         command=lambda: [self.Sel(), ventanaAudios.destroy()], width=20)
-        ventanaAudios.botonSel.place(x=230, y=160)
+        ventanaAudios.botonSel.place(x=300, y=180)
         # Pausar el audio que está cargado
         ventanaAudios.botonStop = Button(ventanaAudios, text="Pausa", command=self.St, width=20)
         ventanaAudios.botonStop.place(x=230, y=120)
-        ventanaAudios.botonsalir=Button(ventanaAudios, text="salir", command=ventanaAudios.quit, width=20).place(x=230, y=180)
+        ventanaAudios.botonsalir=Button(ventanaAudios, image=imgSalir, command=ventanaAudios.quit, width=100, height=20).place(x=300, y=300)
+        ventanaAudios.botonsalir.pack()
 
     # Metodo para el primer audio
     def A1(self):
@@ -343,11 +345,7 @@ class VentanaInicio:
         posicion = str(ancho_ventana) + "x" + str(alto_ventana) + "+" + str(x_ventana) + "+" + str(y_ventana)
         master.geometry(posicion)
 
-        bgInicio = PhotoImage(file="Fondo.png")
-        lblFondo = Label(master, image=bgInicio).place(x=0, y=0)
-        imInicio=PhotoImage(file="Iniciar.png")
-        imcreds = PhotoImage(file="Créditos.png")
-        imsalir = PhotoImage(file="Salir.png")
+        root.config(bg="black")
 
         master.etiqueta = Label(master, text="Proyecto Analisis de Senales y Sistemas", font=('Arial', 16))
         master.etiqueta.pack()
