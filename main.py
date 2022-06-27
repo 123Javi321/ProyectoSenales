@@ -161,7 +161,15 @@ class ventanaFiltros:
 class ventanaAudios:
     def __init__(self):
         ventanaAudios = Toplevel()
-        ventanaAudios.geometry("610x200")
+        ancho_ventana = 610
+        alto_ventana = 200
+
+        x_ventana = root.winfo_screenwidth() // 2 - ancho_ventana // 2
+        y_ventana = root.winfo_screenheight() // 2 - alto_ventana // 2
+
+        posicion = str(ancho_ventana) + "x" + str(alto_ventana) + "+" + str(x_ventana) + "+" + str(y_ventana)
+        ventanaAudios.geometry(posicion)
+
         ventanaAudios.title("Seleccionar audio")
 
         ventanaAudios.etiqueta = Label(ventanaAudios, text="Seleccione el audio para filtrar: ", font=('Arial', 16))
@@ -230,11 +238,21 @@ class ventanaImportar:
     def __init__(self):
         # Creacion de nueva ventana para importar audios
         ventanaImportar = Toplevel()
-        ventanaImportar.geometry("500x250")
+        ancho_ventana = 500
+        alto_ventana = 375
+
+        x_ventana = root.winfo_screenwidth() // 2 - ancho_ventana // 2
+        y_ventana = root.winfo_screenheight() // 2 - alto_ventana // 2
+
+        posicion = str(ancho_ventana) + "x" + str(alto_ventana) + "+" + str(x_ventana) + "+" + str(y_ventana)
+        ventanaImportar.geometry(posicion)
+
         ventanaImportar.title("Importar audios")
 
         imgB1 = PhotoImage(file="Importar.png")
         imgB2 = PhotoImage(file="Salir.png")
+        bgcreds = PhotoImage(file="Fondo.png")
+        lblcreds = Label(ventanaImportar, image=bgcreds).place(x=0, y=0)
         ventanaImportar.etiqueta = Label(ventanaImportar, text="Importación de audios", font=('Arial', 16)).place(
                                             x=150, y=25)
         ventanaImportar.botonImportar = Button(ventanaImportar, image=imgB1,
@@ -280,7 +298,7 @@ class ventanaCreditos:
         # Creacion de nueva ventana para creditos
         ventanaCreditos = Toplevel()
         ancho_ventana = 500
-        alto_ventana = 250
+        alto_ventana = 375
 
         x_ventana = root.winfo_screenwidth() // 2 - ancho_ventana // 2
         y_ventana = root.winfo_screenheight() // 2 - alto_ventana // 2
@@ -290,12 +308,14 @@ class ventanaCreditos:
         ventanaCreditos.title("Integrantes")
 
         imgB1=PhotoImage(file="Volver.png")
-        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Grupo #1", font=('Arial', 16)).place(x=200, y=10)
-        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="•Javier Castañeda - 1290520", font=('Arial', 12)).place(x=150, y=50)
-        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="•Angel Castillo - 1172920 ", font=('Arial', 12)).place(x=150, y=80)
-        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="•Andres Coronado - 1168420 ", font=('Arial', 12)).place(x=150, y=110)
-        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="•Pablo Flores - 1164720", font=('Arial', 12)).place(x=150, y=140)
-        ventanaCreditos.botonVolver = Button(ventanaCreditos, image=imgB1, command=ventanaCreditos.destroy, width=100, height=20).place(x=200, y=200)
+        bgcreds = PhotoImage(file="Fondo.png")
+        lblcreds = Label(ventanaCreditos, image=bgcreds).place(x=0, y=0)
+        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Grupo #1", font=('Arial', 16)).place(x=200, y=30)
+        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="•Javier Castañeda - 1290520", font=('Arial', 12), bg='black', fg='white').place(x=150, y=90)
+        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="•Angel Castillo - 1172920 ", font=('Arial', 12), bg='black', fg='white').place(x=150, y=120)
+        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="•Andres Coronado - 1168420 ", font=('Arial', 12), bg='black', fg='white').place(x=150, y=150)
+        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="•Pablo Flores - 1164720", font=('Arial', 12), bg='black', fg='white').place(x=150, y=180)
+        ventanaCreditos.botonVolver = Button(ventanaCreditos, image=imgB1, command=ventanaCreditos.destroy, width=100, height=20).place(x=200, y=240)
         ventanaCreditos.botonVolver.pack()
         ventanaCreditos.etiqueta.pack()
         ventanaCreditos.etiqueta.pack()
@@ -321,18 +341,21 @@ class VentanaInicio:
 
         bgInicio = PhotoImage(file="Fondo.png")
         lblFondo = Label(master, image=bgInicio).place(x=0, y=0)
+        imInicio=PhotoImage(file="Iniciar.png")
+        imcreds = PhotoImage(file="Créditos.png")
+        imsalir = PhotoImage(file="Salir.png")
 
-        self.etiqueta = Label(master, text="Proyecto Analisis de Senales y Sistemas", font=('Arial', 16))
-        self.etiqueta.pack(pady=20)
+        master.etiqueta = Label(master, text="Proyecto Analisis de Senales y Sistemas", font=('Arial', 16))
+        master.etiqueta.pack()
+        master.botonInicio = Button(master, text="Inicio", command=self.iniciar, width=20)
+        master.botonInicio.pack()
+        master.botonCreditos = Button(master, text="Creditos", command=self.creditos, width=20)
+        master.botonCreditos.pack()
+        master.botonSalir = Button(master, text="Salir", command=master.quit, width=20)
+        master.botonSalir.pack()
 
-        self.botonInicio = Button(master, text="Inicio", command=self.iniciar, width=20)
-        self.botonInicio.pack(pady=10)
 
-        self.botonCreditos = Button(master, text="Creditos", command=self.creditos, width=20)
-        self.botonCreditos.pack(pady=10)
 
-        self.botonSalir = Button(master, text="Salir", command=master.quit, width=20)
-        self.botonSalir.pack(pady=10)
 
     # Metodo para el boton de inicio
     def iniciar(self):
