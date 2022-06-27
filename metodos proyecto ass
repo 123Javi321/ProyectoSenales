@@ -1,0 +1,6 @@
+import sys
+from pyQt5.Qwidgets import QApplication, QFileSystemModel, QTreeView, QVBoxLayout, QWidget
+class explorador(Qwidget)
+ def _init_(self)
+ super()._init_()
+
