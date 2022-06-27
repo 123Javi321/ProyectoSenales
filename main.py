@@ -172,6 +172,9 @@ class ventanaAudios:
 
         ventanaAudios.title("Seleccionar audio")
 
+        bgreproductor = PhotoImage(file="Fondo.png")
+        lblreproductor = Label(ventanaAudios, image=bgreproductor).place(x=0, y=0)
+
         ventanaAudios.etiqueta = Label(ventanaAudios, text="Seleccione el audio para filtrar: ", font=('Arial', 16))
         ventanaAudios.etiqueta.pack()
         # Load y play del primer audio
@@ -190,6 +193,7 @@ class ventanaAudios:
         # Pausar el audio que está cargado
         ventanaAudios.botonStop = Button(ventanaAudios, text="Pausa", command=self.St, width=20)
         ventanaAudios.botonStop.place(x=230, y=120)
+        ventanaAudios.botonsalir=Button(ventanaAudios, text="salir", command=ventanaAudios.quit, width=20).place(x=230, y=180)
 
     # Metodo para el primer audio
     def A1(self):
