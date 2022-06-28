@@ -25,6 +25,7 @@ wF = None
 spec = None
 af1 = None
 
+
 # Clase para los graficos
 class ventanaGraficos:
     def __init__(self):
@@ -79,8 +80,8 @@ class ventanaGraficos:
         spec1.plot()
         plt.draw()
         plt.show()
-        #pygame.mixer.music.load(wO)
-        #pygame.mixer.music.play(loops=0)
+        # pygame.mixer.music.load(wO)
+        # pygame.mixer.music.play(loops=0)
 
     def G3(self):
         print("Grafico 3")
@@ -126,34 +127,53 @@ class ventanaFiltros:
     def __init__(self):
         global m1, m2, m3, optAudio
         ventanaFiltros = Toplevel()
-        ventanaFiltros.geometry("500x300")
+        ancho_ventana = 610
+        alto_ventana = 340
+
+        x_ventana = root.winfo_screenwidth() // 2 - ancho_ventana // 2
+        y_ventana = root.winfo_screenheight() // 2 - alto_ventana // 2
+
+        posicion = str(ancho_ventana) + "x" + str(alto_ventana) + "+" + str(x_ventana) + "+" + str(y_ventana)
+        ventanaFiltros.geometry(posicion)
+
         ventanaFiltros.title("Seleccionar filtro")
+
+        imgsalir = PhotoImage(file="Salir.png")
 
         ventanaFiltros.etiqueta = Label(ventanaFiltros, text="Seleccione el filtro para aplicar: ", font=('Arial', 16))
         ventanaFiltros.etiqueta.place(x=100, y=20)
 
-        ventanaFiltros.botonLP = Button(ventanaFiltros, text="Pasa bajos", command=lambda: [self.SeleccionadorAudio(), self.LP(), ventanaFiltros.destroy()], width=30)
+        ventanaFiltros.botonLP = Button(ventanaFiltros, text="Pasa bajos",
+                                        command=lambda: [self.SeleccionadorAudio(), self.LP(),
+                                                         ventanaFiltros.destroy()], width=30)
         ventanaFiltros.botonLP.place(x=50, y=70)
         ventanaFiltros.entry1 = Entry(ventanaFiltros, width=10)
         ventanaFiltros.entry1.place(x=300, y=70)
 
-        ventanaFiltros.botonHP = Button(ventanaFiltros, text="Pasa altos", command=lambda: [self.SeleccionadorAudio(), self.HP(), ventanaFiltros.destroy()], width=30)
+        ventanaFiltros.botonHP = Button(ventanaFiltros, text="Pasa altos",
+                                        command=lambda: [self.SeleccionadorAudio(), self.HP(),
+                                                         ventanaFiltros.destroy()], width=30)
         ventanaFiltros.botonHP.place(x=50, y=120)
         ventanaFiltros.entry2 = Entry(ventanaFiltros, width=10)
         ventanaFiltros.entry2.place(x=300, y=120)
 
-        ventanaFiltros.botonBP = Button(ventanaFiltros, text="Pasa banda",command=lambda: [self.SeleccionadorAudio(), self.BP(), ventanaFiltros.destroy()], width=30)
+        ventanaFiltros.botonBP = Button(ventanaFiltros, text="Pasa banda",
+                                        command=lambda: [self.SeleccionadorAudio(), self.BP(),
+                                                         ventanaFiltros.destroy()], width=30)
         ventanaFiltros.botonBP.place(x=50, y=170)
         ventanaFiltros.entry3a = Entry(ventanaFiltros, width=10)
         ventanaFiltros.entry3a.place(x=300, y=170)
         ventanaFiltros.entry3b = Entry(ventanaFiltros, width=10)
         ventanaFiltros.entry3b.place(x=400, y=170)
 
-        ventanaFiltros.botonE = Button(ventanaFiltros, text="Estudio de grabación",command=lambda: [self.SeleccionadorAudio(), self.E(), ventanaFiltros.destroy()],width=30)
+        ventanaFiltros.botonE = Button(ventanaFiltros, text="Estudio de grabación",
+                                       command=lambda: [self.SeleccionadorAudio(), self.E(), ventanaFiltros.destroy()],
+                                       width=30)
         ventanaFiltros.botonE.place(x=50, y=220)
         ventanaFiltros.entry4 = Entry(ventanaFiltros, width=10)
         ventanaFiltros.entry4.place(x=300, y=220)
-
+        ventanaFiltros.botonsalir = Button(ventanaFiltros, image=imgsalir, command=ventanaFiltros.quit,
+                                          width=100, height=20).place(x=245, y=300)
 
     # Metodo para definir el audio normalizado
     def SeleccionadorAudio(self):
@@ -173,7 +193,7 @@ class ventanaFiltros:
         global wF, spec
         print('Pasa bajos')
         spec = wF.make_spectrum()
-        #Necesita solo 1 frecuencia de corte
+        # Necesita solo 1 frecuencia de corte
         spec.low_pass()
         ventanaGraficos()
 
@@ -182,7 +202,7 @@ class ventanaFiltros:
         global wF, spec
         print('Pasa altos')
         spec = wF.make_spectrum()
-        #Necesita solo 1 frecuencia de corte
+        # Necesita solo 1 frecuencia de corte
         spec.high_pass()
         ventanaGraficos()
 
@@ -191,7 +211,7 @@ class ventanaFiltros:
         global wF, spec
         print('Pasa banda')
         spec = wF.make_spectrum()
-        #Necesita 2 frecuencias de corte
+        # Necesita 2 frecuencias de corte
         spec.band_stop()
         ventanaGraficos()
 
@@ -199,8 +219,8 @@ class ventanaFiltros:
     def E(self):
         global wF, spec
         print('Estudio de grabacion')
-        
-        #El filtro aquí es por convolucion con Numpy
+
+        # El filtro aquí es por convolucion con Numpy
         ventanaGraficos()
 
 
@@ -220,29 +240,53 @@ class ventanaAudios:
         bgreproductor = PhotoImage(file="Fondo2.png")
         lblreproductor = Label(ventanaAudios, image=bgreproductor).place(x=0, y=0)
         imgSalir = PhotoImage(file="Salir.png")
+        imgpausa = PhotoImage(file="Pausa.png")
+        imgplay = PhotoImage(file="play.png")
+        imgsel = PhotoImage(file="Seleccionar.png")
 
         ventanaAudios.title("Seleccionar audio")
 
-        ventanaAudios.etiqueta = Label(ventanaAudios, text="Seleccione el audio para filtrar: ", font=('Arial', 16))
+        ventanaAudios.etiqueta = Label(ventanaAudios, text="Seleccione el audio para filtrar: ", font=('Arial', 16),
+                                       bg='black', fg='white')
         ventanaAudios.etiqueta.pack()
         # Load y play del primer audio
-        ventanaAudios.botonA1 = Button(ventanaAudios, text="Primer audio", command=lambda: [self.A1()], width=20)
-        ventanaAudios.botonA1.place(x=30, y=60)
-        # Load y play del segundo audio
-        ventanaAudios.botonA2 = Button(ventanaAudios, text="Segundo audio", command=lambda: [self.A2()], width=20)
-        ventanaAudios.botonA2.place(x=230, y=60)
-        # Load y play del tercer audio
-        ventanaAudios.botonA3 = Button(ventanaAudios, text="Tercer audio", command=lambda: [self.A3()], width=20)
-        ventanaAudios.botonA3.place(x=430, y=60)
-        # Ventana para aplicar filtros
-        ventanaAudios.botonSel = Button(ventanaAudios, text="Seleccionar", command=lambda: [self.Sel(), ventanaAudios.destroy()], width=20)
-        ventanaAudios.botonSel.place(x=300, y=180)
-        # Pausar el audio que está cargado
-        ventanaAudios.botonStop = Button(ventanaAudios, text="Pausa", command=self.St, width=20)
-        ventanaAudios.botonStop.place(x=230, y=120)
+        ventanaAudios.labelA3 = Label(ventanaAudios, text="Reproducir audio 1", font=('Arial', 12), bg='black',
+                                      fg='white').place(x=30, y=55)
+        ventanaAudios.botonA1 = Button(ventanaAudios, image=imgplay, command=lambda: [self.A1()], width=50,
+                                       height=50).place(x=70, y=85)
 
-        ventanaAudios.botonsalir=Button(ventanaAudios, image=imgSalir, command=ventanaAudios.quit, width=100, height=20).place(x=300, y=300)
+        # Load y play del segundo audio
+        ventanaAudios.labelA3 = Label(ventanaAudios, text="Reproducir audio 2", font=('Arial', 12), bg='black',
+                                      fg='white').place(x=230, y=55)
+        ventanaAudios.botonA2 = Button(ventanaAudios, image=imgplay, command=lambda: [self.A2()], width=50,
+                                       height=50).place(x=270, y=85)
+
+        # Load y play del tercer audio
+        ventanaAudios.labelA3 = Label(ventanaAudios, text="Reproducir audio 3", font=('Arial', 12), bg='black',
+                                      fg='white').place(x=430, y=55)
+        ventanaAudios.botonA3 = Button(ventanaAudios, image=imgplay, command=lambda: [self.A3()], width=50,
+                                       height=50).place(x=470, y=85)
+        # Ventana para aplicar filtros
+        ventanaAudios.botonSel = Button(ventanaAudios, image=imgsel, command=lambda: [self.Sel(),
+                                                                                      ventanaAudios.destroy()],
+                                        width=100, height=20).place(x=245, y=258)
+        # Pausar el audio que está cargado
+        ventanaAudios.label1 = Label(ventanaAudios, text="Pausa", font=('Arial', 12), bg='black',
+                                     fg='white').place(x=272, y=150)
+        ventanaAudios.botonStop = Button(ventanaAudios, image=imgpausa, command=self.St, width=50,
+                                         height=50).place(x=270, y=180)
+        ventanaAudios.botonsalir = Button(ventanaAudios, image=imgSalir, command=ventanaAudios.quit,
+                                          width=100, height=20).place(x=245, y=300)
+        ventanaAudios.labelA1.pack()
+        ventanaAudios.botonA1.pack()
+        ventanaAudios.labelA2.pack()
+        ventanaAudios.botonA2.pack()
+        ventanaAudios.labelA3.pack()
+        ventanaAudios.botonA3.pack()
+        ventanaAudios.botonSel.pack()
+        ventanaAudios.label1.pack()
         ventanaAudios.botonsalir.pack()
+        ventanaAudios.botonStop.pack()
 
     # Metodo para el primer audio
     def A1(self):
@@ -300,9 +344,13 @@ class ventanaImportar:
         imgB2 = PhotoImage(file="Salir.png")
         bgcreds = PhotoImage(file="Fondo.png")
         lblcreds = Label(ventanaImportar, image=bgcreds).place(x=0, y=0)
-        ventanaImportar.etiqueta = Label(ventanaImportar, text="Importación de audios", font=('Arial', 16)).place(x=150, y=25)
-        ventanaImportar.botonImportar = Button(ventanaImportar, image=imgB1, command=lambda: [self.importar(), ventanaImportar.destroy()], width=100, height=20).place(x=200, y=100)
-        ventanaImportar.botonSalir = Button(ventanaImportar, image=imgB2, command=ventanaImportar.quit, width=100, height=20).place(x=200, y=150)
+        ventanaImportar.etiqueta = Label(ventanaImportar, text="Importación de audios", font=('Arial', 16), bg='black',
+                                     fg='white').place(x=150, y=60)
+        ventanaImportar.botonImportar = Button(ventanaImportar, image=imgB1,
+                                               command=lambda: [self.importar(), ventanaImportar.destroy()], width=100,
+                                               height=20).place(x=200, y=175)
+        ventanaImportar.botonSalir = Button(ventanaImportar, image=imgB2, command=ventanaImportar.quit, width=100,
+                                            height=20).place(x=200, y=225)
         ventanaImportar.botonSalir.pack()
         ventanaImportar.botonImportar.pack()
 
@@ -351,22 +399,22 @@ class ventanaCreditos:
         ventanaCreditos.geometry(posicion)
         ventanaCreditos.title("Integrantes")
 
-        imgB1=PhotoImage(file="Volver.png")
+        imgB1 = PhotoImage(file="Volver.png")
         bgcreds = PhotoImage(file="Fondo.png")
         lblcreds = Label(ventanaCreditos, image=bgcreds).place(x=0, y=0)
         ventanaCreditos.etiqueta = Label(ventanaCreditos, text="Grupo #1", font=('Arial', 16)).place(x=200, y=30)
-        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="•Javier Castañeda - 1290520", font=('Arial', 12), bg='black', fg='white').place(x=150, y=90)
-        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="•Angel Castillo - 1172920 ", font=('Arial', 12), bg='black', fg='white').place(x=150, y=120)
-        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="•Andres Coronado - 1168420 ", font=('Arial', 12), bg='black', fg='white').place(x=150, y=150)
-        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="•Pablo Flores - 1164720", font=('Arial', 12), bg='black', fg='white').place(x=150, y=180)
-        ventanaCreditos.botonVolver = Button(ventanaCreditos, image=imgB1, command=ventanaCreditos.destroy, width=100, height=20).place(x=200, y=240)
+        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="•Javier Castañeda - 1290520", font=('Arial', 12),
+                                         bg='black', fg='white').place(x=150, y=90)
+        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="•Angel Castillo - 1172920 ", font=('Arial', 12),
+                                         bg='black', fg='white').place(x=150, y=120)
+        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="•Andres Coronado - 1168420 ", font=('Arial', 12),
+                                         bg='black', fg='white').place(x=150, y=150)
+        ventanaCreditos.etiqueta = Label(ventanaCreditos, text="•Pablo Flores - 1164720", font=('Arial', 12),
+                                         bg='black', fg='white').place(x=150, y=180)
+        ventanaCreditos.botonVolver = Button(ventanaCreditos, image=imgB1, command=ventanaCreditos.destroy, width=100,
+                                             height=20).place(x=200, y=240)
         ventanaCreditos.botonVolver.pack()
-        #ventanaCreditos.etiqueta.pack()
-        #ventanaCreditos.etiqueta.pack()
-        #ventanaCreditos.etiqueta.pack()
-        #ventanaCreditos.etiqueta.pack()
         ventanaCreditos.etiqueta.pack()
-
 
 
 # clase de ventana principal
@@ -385,17 +433,10 @@ class VentanaInicio:
 
         root.config(bg="black")
 
-        master.etiqueta = Label(master, text="Proyecto Analisis de Senales y Sistemas", font=('Arial', 16))
-        master.etiqueta.pack()
-        master.botonInicio = Button(master, text="Inicio", command=self.iniciar, width=20)
-        master.botonInicio.pack()
-        master.botonCreditos = Button(master, text="Creditos", command=self.creditos, width=20)
-        master.botonCreditos.pack()
-        master.botonSalir = Button(master, text="Salir", command=master.quit, width=20)
-        master.botonSalir.pack()
-
-
-
+        etiqueta = Label(master, text="Proyecto Analisis de Senales y Sistemas", font=('Arial', 16)).place(x=50, y=15)
+        botonInicio = Button(master, text="Iniciar", command=self.iniciar, width=20).place(x=175, y=80)
+        botonCreditos = Button(master, text="Créditos", command=self.creditos, width=20).place(x=175, y=120)
+        botonSalir = Button(master, text="Salir", command=master.quit, width=20).place(x=175, y=160)
 
     # Metodo para el boton de inicio
     def iniciar(self):
@@ -417,4 +458,3 @@ root = Tk()
 optAudio = 0
 miVentana = VentanaInicio(root)
 root.mainloop()
-
