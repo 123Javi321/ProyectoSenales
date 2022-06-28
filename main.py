@@ -9,6 +9,7 @@ from tkinter import messagebox, Tk, Button, Label, PhotoImage
 from thinkdsp import read_wave
 from tkinter import filedialog
 import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt1
 import pygame
 from PIL import Image, ImageTk
 
@@ -21,12 +22,13 @@ w2 = None
 w3 = None
 wO = None
 wF = None
-
+spec = None
+af1 = None
 
 # Clase para los graficos
 class ventanaGraficos:
     def __init__(self):
-        global wO, wF
+        global wO, wF, spec, af1
         ventanaGraficos = Toplevel()
         ventanaGraficos.geometry("700x450")
         ventanaGraficos.title("Graficas")
@@ -62,29 +64,60 @@ class ventanaGraficos:
 
     def G1(self):
         print("Grafico 1")
+        fig1 = plt.figure()
+        global wO
+        wog = wO
+        wog.plot()
+        plt.draw()
+        plt.show()
 
     def G2(self):
         print("Grafico 2")
+        global wO
+        fig2 = plt.figure()
+        spec1 = wO.make_spectrum()
+        spec1.plot()
+        plt.draw()
+        plt.show()
+        #pygame.mixer.music.load(wO)
+        #pygame.mixer.music.play(loops=0)
 
     def G3(self):
         print("Grafico 3")
+        fig3 = plt.figure()
+        global wF, spec, af1
+        af1 = spec.make_wave()
+        af1.plot()
+        plt.draw()
+        plt.show()
 
     def G4(self):
         print("Grafico 4")
+        fig3 = plt.figure()
+        global wF, spec
+        spec.plot()
+        plt.draw()
+        plt.show()
 
     def S1(self):
         print("Audio og")
+        if (optAudio == 1):
+            pygame.mixer.music.load(m1)
+            pygame.mixer.music.play(loops=0)
+        elif (optAudio == 2):
+            pygame.mixer.music.load(m2)
+            pygame.mixer.music.play(loops=0)
+        elif (optAudio == 3):
+            pygame.mixer.music.load(m3)
+            pygame.mixer.music.play(loops=0)
 
     def S2(self):
         print("Audio filtrado")
+        global wF, spec, af1
+        af1 = spec.make_wave()
+        af1.play()
 
     def R(self):
-        global wO
-        spec1 = wO.make_spectrum()
-        spec1.plot()
-        plt.show()
-        pygame.mixer.music.load(wO)
-        pygame.mixer.music.play(loops=0)
         print("Regresar")
 
 
@@ -99,25 +132,18 @@ class ventanaFiltros:
         ventanaFiltros.etiqueta = Label(ventanaFiltros, text="Seleccione el filtro para aplicar: ", font=('Arial', 16))
         ventanaFiltros.etiqueta.pack(pady=20)
 
-        ventanaFiltros.botonLP = Button(ventanaFiltros, text="Pasa bajos",
-                                        command=lambda: [self.LP(), ventanaFiltros.destroy(),
-                                                         self.SeleccionadorAudio()], width=20)
+        ventanaFiltros.botonLP = Button(ventanaFiltros, text="Pasa bajos", command=lambda: [self.SeleccionadorAudio(), self.LP(), ventanaFiltros.destroy()], width=20)
         ventanaFiltros.botonLP.pack(pady=20)
 
-        ventanaFiltros.botonHP = Button(ventanaFiltros, text="Pasa altos",
-                                        command=lambda: [self.HP(), ventanaFiltros.destroy(),
-                                                         self.SeleccionadorAudio()], width=20)
+        ventanaFiltros.botonHP = Button(ventanaFiltros, text="Pasa altos", command=lambda: [self.SeleccionadorAudio(), self.HP(), ventanaFiltros.destroy()], width=20)
         ventanaFiltros.botonHP.pack(pady=20)
 
-        ventanaFiltros.botonBP = Button(ventanaFiltros, text="Pasa banda",
-                                        command=lambda: [self.BP(), ventanaFiltros.destroy(),
-                                                         self.SeleccionadorAudio()], width=20)
+        ventanaFiltros.botonBP = Button(ventanaFiltros, text="Pasa banda",command=lambda: [self.SeleccionadorAudio(), self.BP(), ventanaFiltros.destroy()], width=20)
         ventanaFiltros.botonBP.pack(pady=20)
 
-        ventanaFiltros.botonE = Button(ventanaFiltros, text="Eliminación",
-                                       command=lambda: [self.E(), ventanaFiltros.destroy(), self.SeleccionadorAudio()],
-                                       width=20)
+        ventanaFiltros.botonE = Button(ventanaFiltros, text="Estudio de grabación",command=lambda: [self.SeleccionadorAudio(), self.E(), ventanaFiltros.destroy()],width=30)
         ventanaFiltros.botonE.pack(pady=20)
+
 
     # Metodo para definir el audio normalizado
     def SeleccionadorAudio(self):
@@ -134,26 +160,37 @@ class ventanaFiltros:
 
     # Metodo para el filtro pasa bajos
     def LP(self):
-        global wF
+        global wF, spec
         print('Pasa bajos')
+        spec = wF.make_spectrum()
+        #Necesita solo 1 frecuencia de corte
+        spec.low_pass()
         ventanaGraficos()
 
     # Metodo para el filtro pasa altos
     def HP(self):
-        global wF
+        global wF, spec
         print('Pasa altos')
+        spec = wF.make_spectrum()
+        #Necesita solo 1 frecuencia de corte
+        spec.high_pass(5000)
         ventanaGraficos()
 
     # Metodo para el filtro pasa banda
     def BP(self):
-        global wF
+        global wF, spec
         print('Pasa banda')
+        spec = wF.make_spectrum()
+        #Necesita 2 frecuencias de corte
+        spec.band_stop()
         ventanaGraficos()
 
     # Metodo para el filtro eliminación
     def E(self):
-        global wF
-        print('Eliminacion')
+        global wF, spec
+        print('Estudio de grabacion')
+        
+        #El filtro aquí es por convolucion con Numpy
         ventanaGraficos()
 
 
@@ -170,7 +207,7 @@ class ventanaAudios:
         posicion = str(ancho_ventana) + "x" + str(alto_ventana) + "+" + str(x_ventana) + "+" + str(y_ventana)
         ventanaAudios.geometry(posicion)
 
-        bgreproductor = PhotoImage(file="Fondo2.gif")
+        bgreproductor = PhotoImage(file="Fondo2.png")
         lblreproductor = Label(ventanaAudios, image=bgreproductor).place(x=0, y=0)
         imgSalir = PhotoImage(file="Salir.png")
 
@@ -188,12 +225,12 @@ class ventanaAudios:
         ventanaAudios.botonA3 = Button(ventanaAudios, text="Tercer audio", command=lambda: [self.A3()], width=20)
         ventanaAudios.botonA3.place(x=430, y=60)
         # Ventana para aplicar filtros
-        ventanaAudios.botonSel = Button(ventanaAudios, text="Seleccionar",
-                                        command=lambda: [self.Sel(), ventanaAudios.destroy()], width=20)
+        ventanaAudios.botonSel = Button(ventanaAudios, text="Seleccionar", command=lambda: [self.Sel(), ventanaAudios.destroy()], width=20)
         ventanaAudios.botonSel.place(x=300, y=180)
         # Pausar el audio que está cargado
         ventanaAudios.botonStop = Button(ventanaAudios, text="Pausa", command=self.St, width=20)
         ventanaAudios.botonStop.place(x=230, y=120)
+
         ventanaAudios.botonsalir=Button(ventanaAudios, image=imgSalir, command=ventanaAudios.quit, width=100, height=20).place(x=300, y=300)
         ventanaAudios.botonsalir.pack()
 
@@ -221,12 +258,6 @@ class ventanaAudios:
         pygame.mixer.music.load(m3)
         pygame.mixer.music.play(loops=0)
         optAudio = 3
-
-    # Metodo auxiliar de variables
-    '''def aux(self,num):
-            print(num)
-            return num
-            #ventanaFiltros()'''
 
     # Metodo para seleccionar audio
     def Sel(self):
@@ -259,13 +290,9 @@ class ventanaImportar:
         imgB2 = PhotoImage(file="Salir.png")
         bgcreds = PhotoImage(file="Fondo.png")
         lblcreds = Label(ventanaImportar, image=bgcreds).place(x=0, y=0)
-        ventanaImportar.etiqueta = Label(ventanaImportar, text="Importación de audios", font=('Arial', 16)).place(
-                                            x=150, y=25)
-        ventanaImportar.botonImportar = Button(ventanaImportar, image=imgB1,
-                                               command=lambda: [self.importar(), ventanaImportar.destroy()], width=100,
-                                               height=20).place(x=200, y=100)
-        ventanaImportar.botonSalir = Button(ventanaImportar, image=imgB2, command=ventanaImportar.quit, width=100,
-                                            height=20).place(x=200, y=150)
+        ventanaImportar.etiqueta = Label(ventanaImportar, text="Importación de audios", font=('Arial', 16)).place(x=150, y=25)
+        ventanaImportar.botonImportar = Button(ventanaImportar, image=imgB1, command=lambda: [self.importar(), ventanaImportar.destroy()], width=100, height=20).place(x=200, y=100)
+        ventanaImportar.botonSalir = Button(ventanaImportar, image=imgB2, command=ventanaImportar.quit, width=100, height=20).place(x=200, y=150)
         ventanaImportar.botonSalir.pack()
         ventanaImportar.botonImportar.pack()
 
@@ -280,6 +307,7 @@ class ventanaImportar:
                 m1 = filedialog.askopenfilename(title="Selecciona el audio", filetypes=(("Archivos wav", "*.wav"),))
                 messagebox.showinfo(title='Importar Audios', message='Has importado el audio 1 correctamente')
                 w1 = read_wave(m1)
+                print(type(m1))
                 w1.normalize()
             elif (i == 1):
                 print('Segundo audio')
@@ -323,10 +351,10 @@ class ventanaCreditos:
         ventanaCreditos.etiqueta = Label(ventanaCreditos, text="•Pablo Flores - 1164720", font=('Arial', 12), bg='black', fg='white').place(x=150, y=180)
         ventanaCreditos.botonVolver = Button(ventanaCreditos, image=imgB1, command=ventanaCreditos.destroy, width=100, height=20).place(x=200, y=240)
         ventanaCreditos.botonVolver.pack()
-        ventanaCreditos.etiqueta.pack()
-        ventanaCreditos.etiqueta.pack()
-        ventanaCreditos.etiqueta.pack()
-        ventanaCreditos.etiqueta.pack()
+        #ventanaCreditos.etiqueta.pack()
+        #ventanaCreditos.etiqueta.pack()
+        #ventanaCreditos.etiqueta.pack()
+        #ventanaCreditos.etiqueta.pack()
         ventanaCreditos.etiqueta.pack()
 
 
