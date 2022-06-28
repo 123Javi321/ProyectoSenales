@@ -126,23 +126,33 @@ class ventanaFiltros:
     def __init__(self):
         global m1, m2, m3, optAudio
         ventanaFiltros = Toplevel()
-        ventanaFiltros.geometry("500x350")
+        ventanaFiltros.geometry("500x300")
         ventanaFiltros.title("Seleccionar filtro")
 
         ventanaFiltros.etiqueta = Label(ventanaFiltros, text="Seleccione el filtro para aplicar: ", font=('Arial', 16))
-        ventanaFiltros.etiqueta.pack(pady=20)
+        ventanaFiltros.etiqueta.place(x=100, y=20)
 
-        ventanaFiltros.botonLP = Button(ventanaFiltros, text="Pasa bajos", command=lambda: [self.SeleccionadorAudio(), self.LP(), ventanaFiltros.destroy()], width=20)
-        ventanaFiltros.botonLP.pack(pady=20)
+        ventanaFiltros.botonLP = Button(ventanaFiltros, text="Pasa bajos", command=lambda: [self.SeleccionadorAudio(), self.LP(), ventanaFiltros.destroy()], width=30)
+        ventanaFiltros.botonLP.place(x=50, y=70)
+        ventanaFiltros.entry1 = Entry(ventanaFiltros, width=10)
+        ventanaFiltros.entry1.place(x=300, y=70)
 
-        ventanaFiltros.botonHP = Button(ventanaFiltros, text="Pasa altos", command=lambda: [self.SeleccionadorAudio(), self.HP(), ventanaFiltros.destroy()], width=20)
-        ventanaFiltros.botonHP.pack(pady=20)
+        ventanaFiltros.botonHP = Button(ventanaFiltros, text="Pasa altos", command=lambda: [self.SeleccionadorAudio(), self.HP(), ventanaFiltros.destroy()], width=30)
+        ventanaFiltros.botonHP.place(x=50, y=120)
+        ventanaFiltros.entry2 = Entry(ventanaFiltros, width=10)
+        ventanaFiltros.entry2.place(x=300, y=120)
 
-        ventanaFiltros.botonBP = Button(ventanaFiltros, text="Pasa banda",command=lambda: [self.SeleccionadorAudio(), self.BP(), ventanaFiltros.destroy()], width=20)
-        ventanaFiltros.botonBP.pack(pady=20)
+        ventanaFiltros.botonBP = Button(ventanaFiltros, text="Pasa banda",command=lambda: [self.SeleccionadorAudio(), self.BP(), ventanaFiltros.destroy()], width=30)
+        ventanaFiltros.botonBP.place(x=50, y=170)
+        ventanaFiltros.entry3a = Entry(ventanaFiltros, width=10)
+        ventanaFiltros.entry3a.place(x=300, y=170)
+        ventanaFiltros.entry3b = Entry(ventanaFiltros, width=10)
+        ventanaFiltros.entry3b.place(x=400, y=170)
 
         ventanaFiltros.botonE = Button(ventanaFiltros, text="Estudio de grabación",command=lambda: [self.SeleccionadorAudio(), self.E(), ventanaFiltros.destroy()],width=30)
-        ventanaFiltros.botonE.pack(pady=20)
+        ventanaFiltros.botonE.place(x=50, y=220)
+        ventanaFiltros.entry4 = Entry(ventanaFiltros, width=10)
+        ventanaFiltros.entry4.place(x=300, y=220)
 
 
     # Metodo para definir el audio normalizado
@@ -173,7 +183,7 @@ class ventanaFiltros:
         print('Pasa altos')
         spec = wF.make_spectrum()
         #Necesita solo 1 frecuencia de corte
-        spec.high_pass(5000)
+        spec.high_pass()
         ventanaGraficos()
 
     # Metodo para el filtro pasa banda
